@@ -11,8 +11,9 @@ contract VotingSystem {
 
     event Voted(address indexed voter, uint256 candidateIndex);
 
-    constructor() {
+    constructor(token_address) {
         chairperson = msg.sender;
+		setTokenContract(token_address)
     }
 
     function setTokenContract(address _tokenAddress) external {
