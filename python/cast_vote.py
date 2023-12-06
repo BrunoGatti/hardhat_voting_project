@@ -25,8 +25,6 @@ approve_tx_hash = web3.eth.send_raw_transaction(signed_approve_tx.rawTransaction
 web3.eth.wait_for_transaction_receipt(approve_tx_hash)
 
 
-
-
 print("approval", approve_tx)
 time.sleep(5)
 # Check if the sender has a sufficient balance to vote (1 token)

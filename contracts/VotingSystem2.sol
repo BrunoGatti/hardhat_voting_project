@@ -6,10 +6,10 @@ import "./MyToken.sol";
 contract VotingSystem {
     MyToken public myToken;  // Reference to the ERC-20 token contract
     address public chairperson;  // Chairperson's address
-    mapping(address => uint256) public votes;  // Mapping to track votes by address
+    mapping(address => string) public encryptedVotes;  // Mapping to store encrypted votes by address
     uint256[] public candidateVotes;  // Array to track votes for each candidate
 
-    event Voted(address indexed voter, uint256 candidateIndex);
+    event Voted(address indexed voter, string encryptedVote);
 
     constructor() {
         chairperson = msg.sender;
@@ -20,24 +20,25 @@ contract VotingSystem {
         myToken = MyToken(_tokenAddress);
     }
 
-    function vote(uint256 candidateIndex) external {
+    function vote(string calldata encryptedVote) external {
         require(msg.sender != address(0), "Invalid sender address");
         require(myToken != MyToken(address(0)), "Token contract not set");
-        require(myToken.balanceOf(msg.sender) >= fee, "Insufficient tokens to vote");
-        require(candidateIndex < candidateVotes.length, "Invalid candidate index");
+        require(myToken.balanceOf(msg.sender) >= 1, "Insufficient tokens to vote");
 
         // Transfer the fee to the voting system contract
-        require(myToken.transferFrom(msg.sender, address(this), fee), "Token transfer failed");
+        require(myToken.transferFrom(msg.sender, address(this), 1), "Token transfer failed");
 
-        // Record the vote
-        votes[msg.sender]++;
-        candidateVotes[candidateIndex]++;
+        // Record the encrypted vote
+        encryptedVotes[msg.sender] = encryptedVote;
 
-        emit Voted(msg.sender, candidateIndex);
+        emit Voted(msg.sender, encryptedVote);
     }
 
     function getVotingResults() external view returns (uint256[] memory) {
         return candidateVotes;
     }
-}
 
+    function getEncryptedVote(address voter) external view returns (string memory) {
+        return encryptedVotes[voter];
+    }
+}

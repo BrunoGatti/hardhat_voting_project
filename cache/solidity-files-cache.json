@@ -1,44 +1,6 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/brunogatti/Desktop/hardat_voting_project/contracts/Token.sol": {
-      "lastModificationDate": 1698780421732,
-      "contentHash": "0fe605c6c60e323e52b3981a670b9de2",
-      "sourceName": "contracts/Token.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "hardhat/console.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "Token"
-      ]
-    },
     "/Users/brunogatti/Desktop/hardat_voting_project/node_modules/hardhat/console.sol": {
       "lastModificationDate": 1698774817103,
       "contentHash": "896f68942c3a20e9ae3c3c5bfd3add54",
@@ -303,9 +265,47 @@
       ]
     },
     "/Users/brunogatti/Desktop/hardat_voting_project/contracts/VotingSystem.sol": {
-      "lastModificationDate": 1699017707333,
-      "contentHash": "72a09615f4f98784d6e73eea0f8c8a11",
+      "lastModificationDate": 1701879108392,
+      "contentHash": "28a399c78b03c1b188b49653dd3a1f91",
       "sourceName": "contracts/VotingSystem.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./MyToken.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "VotingSystem"
+      ]
+    },
+    "/Users/brunogatti/Desktop/hardat_voting_project/contracts/VotingSystem2.sol": {
+      "lastModificationDate": 1701874530915,
+      "contentHash": "efede5b044671bdd778b71bed5b76d3d",
+      "sourceName": "contracts/VotingSystem2.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {

@@ -6,14 +6,13 @@ import "./MyToken.sol";
 contract VotingSystem {
     MyToken public myToken;  // Reference to the ERC-20 token contract
     address public chairperson;  // Chairperson's address
-    mapping(address => uint256) public votes;  // Mapping to track votes by address
-    uint256[] public candidateVotes;  // Array to track votes for each candidate
+    string[] private encryptedVotes;  // List to store encrypted votes
+    address[] public voters;  // Array to track the addresses of voters
 
-    event Voted(address indexed voter, uint256 candidateIndex);
+    event Voted(address indexed voter, string encryptedVote);
 
-    constructor(token_address) {
+    constructor() {
         chairperson = msg.sender;
-		setTokenContract(token_address)
     }
 
     function setTokenContract(address _tokenAddress) external {
@@ -21,24 +20,27 @@ contract VotingSystem {
         myToken = MyToken(_tokenAddress);
     }
 
-    function vote(uint256 candidateIndex) external {
+    function vote(string calldata encryptedVote) external {
         require(msg.sender != address(0), "Invalid sender address");
         require(myToken != MyToken(address(0)), "Token contract not set");
-        require(myToken.balanceOf(msg.sender) >= fee, "Insufficient tokens to vote");
-        require(candidateIndex < candidateVotes.length, "Invalid candidate index");
+        require(myToken.balanceOf(msg.sender) >= 1, "Insufficient tokens to vote");
+        require(myToken.balanceOf(msg.sender) < 2, "Balance exceedes normal balance, the tokens are more than two");
 
         // Transfer the fee to the voting system contract
-        require(myToken.transferFrom(msg.sender, address(this), fee), "Token transfer failed");
+        require(myToken.transferFrom(msg.sender, address(this), 1), "Token transfer failed");
 
-        // Record the vote
-        votes[msg.sender]++;
-        candidateVotes[candidateIndex]++;
+        // Record the encrypted vote
+        encryptedVotes.push(encryptedVote);
+        voters.push(msg.sender); // Record the voter's address
 
-        emit Voted(msg.sender, candidateIndex);
+        emit Voted(msg.sender, encryptedVote);
     }
 
-    function getVotingResults() external view returns (uint256[] memory) {
-        return candidateVotes;
+    function getAllVoters() external view returns (address[] memory) {
+        return voters;
+    }
+
+    function getEncryptedVotes() external view returns (string[] memory) {
+        return encryptedVotes;
     }
 }
-
