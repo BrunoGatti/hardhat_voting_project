@@ -1,7 +1,11 @@
 from encrypt_decrypt_password import encrypt_data_with_password
 
+#used this file to generate the encrypted secret file, theres a version of this script labeled _secure which does not contain the hardcoded secrets, this file is usefull only for testing purposes and must be removed from final releas#used this file to generate the encrypted secret file, theres a version of this script labeled _secure which does not contain the hardcoded secrets, this file is usefull only for testing purposes and must be removed from final releasee
+
 # User-provided password
 password = input("Enter a password: ")
+
+
 
 # Sensitive data to encrypt (e.g., private key and API key)
 private_key = "915dd4d1bb81f74ee556c35c465e06c6d12c9697fcfe682a6806baf703fa84c5"

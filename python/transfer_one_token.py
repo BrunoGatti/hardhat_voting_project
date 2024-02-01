@@ -1,6 +1,9 @@
 from web3 import Web3
 import json
 
+
+#script usato per trasferire un token da un indirizzo ad un altro. Da modificare per includere le utils.
+
 INFURA_API_KEY = "3496684c976749008121193931b2cc15"
 # Replace with your Ethereum RPC URL
 rpc_url = "https://sepolia.infura.io/v3/"+INFURA_API_KEY

@@ -45,7 +45,7 @@ def enable_voting(token_contract,sender_private_key):
             recipient_address = voting_booths[index]
             balance = token_contract.functions.balanceOf(recipient_address).call()
             
-            if balance > 5:
+            if balance == 0:
                 # Sender's private key to fund the booth
                 #sender_private_key = input("Enter the sender's private key to fund the booth: ")
                 transaction_hash = mu_send_one_token_to_address(sender_private_key, recipient_address)

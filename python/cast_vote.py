@@ -4,32 +4,37 @@ from encrypt_decrypt_password import *
 from ethereum_utils import *
 import time
 
-print("\nsender private key: "+CHAIRPERSON_PRIVATE_KEY+"\napi key: "+API_KEY)
+print("\nchairperson's private key: "+CHAIRPERSON_PRIVATE_KEY+"\napi key: "+API_KEY)
 
 # Replace with your Ethereum sender's address and private key
-sender_address = input('insert sender address: ')
+#sender_address = input('insert sender address: ')
+sender_address=BOOTH1_PUBLIC_ADDRESS
 sender_private_key = input('insert sender private key: ')
 
 #create a contract instance
 token_contract = web3.eth.contract(address=TOKEN_CONTRACT_ADDRESS, abi=TOKEN_ABI)
 
 
-approve_tx = TOKEN_CONTRACT.functions.approve(VOTING_SYSTEM_CONTRACT_ADDRESS, 1).build_transaction({
-    'chainId': 11155111,  # Replace with the correct chain ID
-    'gasPrice': web3.to_wei(20, 'gwei'),
-    'gas': 400000,
-    'nonce': web3.eth.get_transaction_count(sender_address),
-})
-signed_approve_tx = web3.eth.account.sign_transaction(approve_tx, sender_private_key)
-approve_tx_hash = web3.eth.send_raw_transaction(signed_approve_tx.rawTransaction)
-web3.eth.wait_for_transaction_receipt(approve_tx_hash)
+#approve_tx = TOKEN_CONTRACT.functions.approve(VOTING_SYSTEM_CONTRACT_ADDRESS, 10**18).build_transaction({
+#    'chainId': 11155111,  # Replace with the correct chain ID
+#    'gasPrice': web3.to_wei(20, 'gwei'),
+#    'gas': 400000,
+#    'nonce': web3.eth.get_transaction_count(sender_address)+1,
+#})
+#signed_approve_tx = web3.eth.account.sign_transaction(approve_tx, sender_private_key)
+#approve_tx_hash = web3.eth.send_raw_transaction(signed_approve_tx.rawTransaction)
+#web3.eth.wait_for_transaction_receipt(approve_tx_hash)
 
+approve_tx_hash= approve_address(sender_private_key)
 
-print("approval", approve_tx)
+print("approval", approve_tx_hash)
 time.sleep(5)
 # Check if the sender has a sufficient balance to vote (1 token)
 balance = TOKEN_CONTRACT.functions.balanceOf(sender_address).call()
+print("the balance of the account is "+str(balance))
 
+allowance = TOKEN_CONTRACT.functions.allowance(sender_address,VOTING_SYSTEM_CONTRACT_ADDRESS).call()
+print("the voting booth is allowed to spend" +str(allowance)+" coints")
 if balance < 1:
     print("Insufficient balance to vote.")
 else:
@@ -39,7 +44,7 @@ else:
     gas_price = web3.to_wei(10, "gwei")
     gas_limit = 200000
 
-    transaction = VOTING_SYSTEM_CONTRACT.functions.vote(0).build_transaction({
+    transaction = VOTING_SYSTEM_CONTRACT.functions.vote("pd").build_transaction({
         "chainId": 11155111,  # Replace with the correct chain ID (e.g., 1337 for localhost)
         "gasPrice": gas_price,
         "gas": gas_limit,
@@ -51,4 +56,4 @@ else:
     transaction_hash = web3.eth.send_raw_transaction(signed_transaction.rawTransaction)
 
     print("Vote successfully cast. Transaction hash:", transaction_hash.hex())
-    print(VOTING_SYSTEM_CONTRACT.functions.getVotingResults().call())
+    print(VOTING_SYSTEM_CONTRACT.functions.getEncryptedVotes.call())

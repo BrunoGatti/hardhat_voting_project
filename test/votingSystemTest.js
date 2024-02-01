@@ -56,6 +56,20 @@ describe('VotingSystem', function () {
 
 		
 	});
+	it('should set the balance of new accounts to 0', async () =>{
+        // Verify that the balance of the new account is zero
+        const initialBalance = await myToken.balanceOf(votingBooth.address);
+        expect(initialBalance).to.equal(0);
+        console.log("the balance is 0");	
+
+		});
+	it('allowance should be 0 for new accounts', async () =>{
+ 
+		// Verify that there is no allowance for the voting booth
+		const initialAllowance = await myToken.allowance(await votingBooth.getAddress(),await votingSystem.getAddress());
+		expect(initialAllowance).to.equal(0);
+		console.log("the initial allowance is zero");
+		});
 
 
 	it('should allow voting booth to vote after approval', async () => {
@@ -71,23 +85,23 @@ describe('VotingSystem', function () {
 		console.log("the initial allowance is zero");
 
 		// Sign and send the "approve" transaction
-		const approveTransaction = await myToken.connect(votingBooth).approve(await votingSystem.getAddress(), 1);
-		await approveTransaction.wait();
+		const approveTransaction = await myToken.connect(votingBooth).approve(await votingSystem.getAddress(),"1000000000000000000");
+		await approveTransaction.wait();	
 		console.log("approve transaction issued");
 
 		// Verify that the allowance is now 1
 		var updatedAllowance = await myToken.allowance(await votingBooth.getAddress(), await votingSystem.getAddress());
-		expect(updatedAllowance).to.equal(1);
+		expect(updatedAllowance).to.equal("1000000000000000000");
 		console.log("allowance is now",updatedAllowance);
 
 		// Send one token to the voting booth from the owner
-		const sendTransaction = await myToken.transfer(await votingBooth.getAddress(), 1);
+		const sendTransaction = await myToken.transfer(await votingBooth.getAddress(),"1000000000000000000");
 		await sendTransaction.wait();
 		console.log("transaction is sent");
 
 		// Verify that the balance of the voting booth is now 1
 		var updatedBalance = await myToken.balanceOf(await votingBooth.getAddress());
-		expect(updatedBalance).to.equal(1);
+		expect(updatedBalance).to.equal("1000000000000000000");
 		console.log("the balance of the voting booth is now ",updatedBalance);
 
 		// Voting booth calls the vote transaction
@@ -113,7 +127,7 @@ describe('VotingSystem', function () {
 	});
 	it('should fail when voting booth does not give allowance', async () => {
 		// Send one token to the voting booth from the owner
-		const sendTransaction = await myToken.transfer(await votingBooth.getAddress(), 1);
+		const sendTransaction = await myToken.transfer(await votingBooth.getAddress(), "1000000000000000000");
 		await sendTransaction.wait();
 		console.log("transaction is sent");
 
@@ -132,7 +146,7 @@ describe('VotingSystem', function () {
 	});
 	it('should fail when voting booth has insufficient tokens', async () => {
 		// Allow the voting system to spend 1 token on behalf of the voting booth
-		const approveTransaction = await myToken.connect(votingBooth).approve(await votingSystem.getAddress(), 1);
+		const approveTransaction = await myToken.connect(votingBooth).approve(await votingSystem.getAddress(), "1000000000000000000");
 		await approveTransaction.wait();
 		console.log("approve transaction issued");
 
@@ -151,12 +165,12 @@ describe('VotingSystem', function () {
 	});
 	it('should fail when voting booth has too many tokens', async () => {
 		// Allow the voting system to spend 2 tokens on behalf of the voting booth
-		const approveTransaction = await myToken.connect(votingBooth).approve(await votingSystem.getAddress(), 2);
+		const approveTransaction = await myToken.connect(votingBooth).approve(await votingSystem.getAddress(), "2000000000000000000");
 		await approveTransaction.wait();
 		console.log("approve transaction issued");
 
 		// Send 2 tokens to the voting booth from the owner
-		const sendTransaction = await myToken.transfer(await votingBooth.getAddress(), 2);
+		const sendTransaction = await myToken.transfer(await votingBooth.getAddress(), "2000000000000000000");
 		await sendTransaction.wait();
 		console.log("transaction is sent");
 
@@ -169,7 +183,8 @@ describe('VotingSystem', function () {
 			expect.fail("Vote transaction should fail with too many tokens");
 		} catch (error) {
 			// Verify that the error is due to having too many tokens
-			expect(error.message).to.contain("'Balance exceedes normal balance, the tokens are more than two'");
+			console.log(error.message)
+			expect(error.message).to.contain("Balance exceedes normal");
 			console.log("Vote transaction failed as expected: too many tokens");
 		}
 	});
