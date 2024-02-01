@@ -7,6 +7,9 @@ import base64
 import os
 
 
+#This file contains the utilities necessary to encrypt and decrypt the sensible files that the program needs to access,
+#namely the API key and the private key of the chairperson, those files are locked and unlocked using a password, and the secrets are hashed using a sha256 based algorith based algorit based algorithmhmm
+
 def generate_key_from_password(password, salt):
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256(),

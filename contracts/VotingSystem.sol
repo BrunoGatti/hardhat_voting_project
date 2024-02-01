@@ -7,7 +7,6 @@ contract VotingSystem {
     MyToken public myToken;  // Reference to the ERC-20 token contract
     address public chairperson;  // Chairperson's address
     string[] private encryptedVotes;  // List to store encrypted votes
-    address[] public voters;  // Array to track the addresses of voters
 
     event Voted(address indexed voter, string encryptedVote);
 
@@ -21,23 +20,17 @@ contract VotingSystem {
     }
 
     function vote(string calldata encryptedVote) external {
+        //modifica: inserisci la balance in eth, non in decimali
         require(msg.sender != address(0), "Invalid sender address");
         require(myToken != MyToken(address(0)), "Token contract not set");
-        require(myToken.balanceOf(msg.sender) >= 1, "Insufficient tokens to vote");
-        require(myToken.balanceOf(msg.sender) < 2, "Balance exceedes normal balance, the tokens are more than two");
+        require(myToken.balanceOf(msg.sender)/10**18 ==1, "Insufficient tokens to vote or Balance exceedes normal balance");
 
         // Transfer the fee to the voting system contract
-        require(myToken.transferFrom(msg.sender, address(this), 1), "Token transfer failed");
+        require(myToken.transferFrom(msg.sender, address(this), 1*10**18), "Token transfer failed");
 
         // Record the encrypted vote
         encryptedVotes.push(encryptedVote);
-        voters.push(msg.sender); // Record the voter's address
-
         emit Voted(msg.sender, encryptedVote);
-    }
-
-    function getAllVoters() external view returns (address[] memory) {
-        return voters;
     }
 
     function getEncryptedVotes() external view returns (string[] memory) {

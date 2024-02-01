@@ -227,8 +227,8 @@
       ]
     },
     "/Users/brunogatti/Desktop/hardat_voting_project/contracts/MyToken.sol": {
-      "lastModificationDate": 1698926880533,
-      "contentHash": "43fe33f7da41424a546768f07f27b7a7",
+      "lastModificationDate": 1701957048729,
+      "contentHash": "a877a3f29a8337d7b235674f0379c88f",
       "sourceName": "contracts/MyToken.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -265,8 +265,8 @@
       ]
     },
     "/Users/brunogatti/Desktop/hardat_voting_project/contracts/VotingSystem.sol": {
-      "lastModificationDate": 1701879108392,
-      "contentHash": "28a399c78b03c1b188b49653dd3a1f91",
+      "lastModificationDate": 1702164532908,
+      "contentHash": "bc1409959ef923f7ba000c8e7d94e6b5",
       "sourceName": "contracts/VotingSystem.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -303,7 +303,7 @@
       ]
     },
     "/Users/brunogatti/Desktop/hardat_voting_project/contracts/VotingSystem2.sol": {
-      "lastModificationDate": 1701874530915,
+      "lastModificationDate": 1701901447137,
       "contentHash": "efede5b044671bdd778b71bed5b76d3d",
       "sourceName": "contracts/VotingSystem2.sol",
       "solcConfig": {

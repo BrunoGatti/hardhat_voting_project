@@ -10,4 +10,3 @@ contract MyToken is ERC20 {
         _mint(msg.sender, 100000000 * 10**18); // Mint 100,000,000 tokens and send them to the deployer
     }
 }
-
